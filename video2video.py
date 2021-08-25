@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import utils
 from PIL import ImageFont,Image,ImageDraw
-import img2img
 import time 
 from subprocess import Popen,PIPE
 from img2img import bgrimg2charimg,bgrimg2charimg_color
@@ -25,7 +24,8 @@ def video_convert(input_path,output_path,cvt_func):
 	print(f'frame_cout = :{frame_count}')
 	if output_path == '':
 		output_path = utils.output_name_generator(input_path)
-	pool = multiprocessing.Pool()
+	cvt_core_num = max(1,multiprocessing.cpu_count()-1)
+	pool = multiprocessing.Pool(processes=cvt_core_num)
 	frames_output = []
 	while True:
 		ret,frame = vid.read()
