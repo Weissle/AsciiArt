@@ -9,6 +9,12 @@
 			"type": "python",
 			"request": "launch",
 			"program": "${file}",
+			"args":[
+				"-i",
+				"v1.mp4",
+				// "test.jpg",
+				// "-c"
+			],
 			"console": "integratedTerminal"
 		}
 	]
