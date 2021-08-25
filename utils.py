@@ -5,15 +5,15 @@ import pathlib
 
 class Config():
 	# input_size , output_size is [height,width]
-	def __init__(self,input_size,output_size):
+	def __init__(self,input_size,output_size,char_list=None):
 		self.input_size = input_size
 		self.output_size = output_size
-
+		if char_list is None:
+			self.char_list = get_char_list('resources/char_sorted.txt')
+		else:
+			self.char_list = char_list
 		fnt = load_font(None)
-		char_list = get_char_list('resources/char_sorted.txt')
-
 		self.font = fnt
-		self.char_list = char_list
 		char_width,char_height = fnt.getsize('A')
 		self.char_width,self.char_height = char_width,char_height
 		self.chars_size = [int(output_size[0]/char_height),int(output_size[1]/char_width)]

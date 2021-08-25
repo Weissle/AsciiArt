@@ -2,19 +2,18 @@ import cv2
 import numpy
 import utils
 from PIL import ImageFont,Image,ImageDraw
-import pathlib
 
 def bgrimg2charimg(img,cfg):
 	img = cv2.resize(img,tuple(cfg.chars_size[::-1]),0.5,0.5,cv2.INTER_AREA)
 	img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 	chars = utils.grayimg2chars(img,cfg)
-	ret = Image.new("L",cfg.output_size[::-1],color=(255))
+	ret = Image.new("RGB",cfg.output_size[::-1],color=(255,255,255))
 
 	d = ImageDraw.Draw(ret)
 
 	txt = '\n'.join(chars)
-	d.multiline_text((0,0),txt,font=cfg.font,fill=(0),spacing=0) 
+	d.multiline_text((0,0),txt,font=cfg.font,fill=(0,0,0),spacing=0) 
 	
 	return ret
 

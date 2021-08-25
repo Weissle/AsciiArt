@@ -1,5 +1,5 @@
 import cv2
-import numpy
+import numpy as np
 import utils
 from PIL import ImageFont,Image,ImageDraw
 import img2img
@@ -8,7 +8,8 @@ from subprocess import Popen,PIPE
 from img2img import bgrimg2charimg,bgrimg2charimg_color
 import multiprocessing
 
-class multiprocess_warp(cvt_func,frame,cfg):
+def multiprocess_warp(cvt_func,frame,*cfg_params):
+	cfg = utils.Config(*cfg_params)
 	return cvt_func(frame,cfg)
 
 def video_convert(input_path,output_path,cvt_func):
@@ -24,39 +25,30 @@ def video_convert(input_path,output_path,cvt_func):
 	print(f'frame_cout = :{frame_count}')
 	if output_path == '':
 		output_path = utils.output_name_generator(input_path)
-
-	frames = []
+	pool = multiprocessing.Pool()
+	frames_output = []
 	while True:
 		ret,frame = vid.read()
 		if ret == False:
 			break
-		frames.append(frame)
-	
-	frames_output = [None]*len(frames)
-
-	cpu_num = multiprocessing.cpu_count()
-	cpu_num = max(1,cpu_num)
-	pool = multiprocessing.Pool(processes=cpu_num)
-	for i in range(len(frames)):
-		# frames_output[i] = pool.apply_async(cvt_func,args=(frames[i],cfg))
-		frames_output[i] = pool.apply_async(multiprocess_convert,args=(cvt_func,frames[i],cfg))
-		# frames_output = pool.starmap_async(cvt_func,[(fr,cfg) for fr in frames],len(frames))
+		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,[h,w],[h,w],cfg.char_list)))
 	
 	pool.close()
 
-	output_process = Popen(['ffmpeg.exe','-y','-f','image2pipe','-vcodec','mjpeg','-r',str(fps),'-i','-','-vcodec','libx265','-qscale','5','-r',str(fps),output_path],stdin=PIPE)
-
+	fourcc = cv2.VideoWriter_fourcc(*'H264')
+	output_video = cv2.VideoWriter(output_path,fourcc,fps,(w,h))
+	cnt = 0
 	for res in frames_output:
 		fr = res.get()
-		fr.save(output_process.stdin,format='jpeg')
+		tmp = np.array(fr)
+		output_video.write(tmp)
+		cnt += 1
+		print(f'{cnt}/{frame_count}')
+
 	pool.join()
-
-	output_process.stdin.close()
-	output_process.wait()
-	print(time.time()-starttime)
-
 	vid.release()
-	cv2.destroyAllWindows()
+	output_video.release()
+	print(time.time()-starttime)
 
 if __name__ == '__main__':
 	args = utils.get_args()
