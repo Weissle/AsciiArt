@@ -32,7 +32,8 @@ def video_convert(input_path,output_path,cvt_func):
 		if ret == False:
 			break
 		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,[h,w],[h,w],cfg.char_list)))
-	
+
+	vid.release()
 	pool.close()
 
 	fourcc = cv2.VideoWriter_fourcc(*'H264')
@@ -46,7 +47,6 @@ def video_convert(input_path,output_path,cvt_func):
 		print(f'{cnt}/{frame_count}')
 
 	pool.join()
-	vid.release()
 	output_video.release()
 	print(time.time()-starttime)
 
