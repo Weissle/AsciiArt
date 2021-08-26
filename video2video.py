@@ -83,7 +83,8 @@ def video_convert(args):
 		# special case for moviepy
 		if idx != 0:
 			frames_output[idx] = None
-		gc.collect()
+		if idx % 100 == 99:
+			gc.collect()
 		return ret
 
 	dst_vid = VideoClip(get_frame,duration=ori_duration)
@@ -91,11 +92,11 @@ def video_convert(args):
 	if not args.no_audio:
 		dst_vid.audio = ori_vid.audio
 
-	# dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=multiprocessing.cpu_count())	
-	dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=2)	
+	pool.close()
+	pool.join()
+	dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=multiprocessing.cpu_count())	
+	# dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=2)	
 
-	# pool.close()
-	# pool.join()
 	ori_vid.close()
 	dst_vid.close()
 
