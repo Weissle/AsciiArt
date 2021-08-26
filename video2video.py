@@ -16,7 +16,7 @@ def multiprocess_warp(cvt_func,frame,*cfg_params):
 def create_slient_video(input_path,output_path,cvt_func):
 	vid = cv2.VideoCapture(input_path)
 	h,w = int(vid.get(4)),int(vid.get(3))
-	cfg = utils.Config([h,w],[h,w])
+	cfg = utils.Config([h,w],args.scale)
 
 	fps = vid.get(cv2.CAP_PROP_FPS)
 	frame_count = vid.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -29,13 +29,14 @@ def create_slient_video(input_path,output_path,cvt_func):
 		ret,frame = vid.read()
 		if ret == False:
 			break
-		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,[h,w],[h,w],cfg.char_list)))
+		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,[h,w],args.scale,cfg.char_list)))
 
 	vid.release()
 	pool.close()
 
-	fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-	output_video = cv2.VideoWriter(output_path,fourcc,fps,(w,h))
+	# fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+	# output_video = cv2.VideoWriter(output_path,fourcc,fps,cfg.output_size[::-1])
+	moviepy.video.VideoClip.VideoClip()
 	print('Converting')
 	for i in trange(len(frames_output)):
 		res = frames_output[i]
