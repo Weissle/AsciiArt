@@ -23,7 +23,9 @@ class Config():
 		# self.chars_size = [math.ceil(self.output_size[0]/char_height),math.ceil(self.output_size[1]/char_width)]
 		self.chars_size = [int(self.output_size[0]/char_height),int(self.output_size[1]/char_width)]
 
-def get_char_list(path):
+def get_char_list(path=None):
+	if path == None or path == '':
+		path = './resources/char_sorted.txt'
 	f = open(path,'r')
 	l = f.readline()
 	f.close()
