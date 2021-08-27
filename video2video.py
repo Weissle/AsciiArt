@@ -27,7 +27,7 @@ def video_convert(args):
 	ori_duration = ori_vid.duration
 	w,h = ori_vid.size
 
-	pool = multiprocessing.Pool()
+	pool = multiprocessing.Pool(maxtasksperchild=64)
 	frames_output = []
 
 	char_list = utils.get_char_list()
