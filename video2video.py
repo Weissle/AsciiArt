@@ -7,9 +7,8 @@ import multiprocessing
 from moviepy.editor import VideoFileClip,VideoClip
 import gc
 
-def multiprocess_warp(cvt_func,frame,*cfg_params):
-	cfg = utils.Config(*cfg_params)
-	return cvt_func(frame,cfg)
+def multiprocess_warp(cvt_func,frame,args):
+	return cvt_func(frame,args)
 
 def video_convert(args):
 
@@ -30,15 +29,12 @@ def video_convert(args):
 	pool = multiprocessing.Pool(maxtasksperchild=64)
 	frames_output = []
 
-	char_list = utils.get_char_list()
-	frames_output = []
 	for frame in ori_vid.iter_frames(logger='bar'):
 		h,w,_ = frame.shape
 		frame = frame[:,:,::-1]
-		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,[h,w],args.scale,char_list)))
+		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,args)))
 
 	frames_count = len(frames_output)
-	cfg = utils.Config([h,w],args.scale,char_list)
 	def get_frame(t):
 		idx = int(frames_count/ori_duration*t)
 		if idx >= len(frames_output):
