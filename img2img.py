@@ -30,8 +30,7 @@ def bgrimg2charimg_color(img, args):
     for row in range(chars_size[1]):
         for col in range(chars_size[0]):
             tmp = img[row][col]
-            # bgr color to rgb color
-            color = tuple(tmp[::-1])
+            color = tuple(tmp)
             d.text((col*cw, row*ch), chars[row][col], fill=color, font=fnt)
     return ret
 

@@ -57,7 +57,7 @@ python ascii_art.py -i pic/xly.jpg -o xly_200.jpg -s 2 -c
 	<img src="pic/xly_200.jpg" width=400 height=400>
 </p>
 
-### From video(or gif) to video(or git) ###
+### From video(or gif) to video(or gif) ###
 ```python
 python ascii_art.py -i pic/xly.gif # no color, the output file path is ./AsciiArt_xly.gif
 python ascii_art.py -i pic/xly.gif -o xly_200.jpg -s 2 -c

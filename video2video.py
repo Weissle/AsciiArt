@@ -41,7 +41,7 @@ def convert(args):
 		# special case for moviepy
 		if idx != 0:
 			frames_output[idx] = None
-		if idx % 256 == 0:
+		if idx % 32 == 0:
 			gc.collect()
 		return ret
 
