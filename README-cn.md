@@ -11,7 +11,6 @@
 
 ## 介绍 ##
 灵感来源 [ASCII-generator](https://github.com/uvipen/ASCII-generator). 
-It is good, but has some issues when handling video such as the conversion is slow, output video has no audio.
 这个工具某些方面挺好的，但是在转换视频时有一些问题比如：速度太慢、输出没有音频。
 
 ## 特点 ##
