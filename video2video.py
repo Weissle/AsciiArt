@@ -18,9 +18,6 @@ def convert(args):
 	else:
 		cvt_func = bgrimg2charimg
 
-	if output_path == '':
-		output_path = utils.output_name_generator(input_path)
-
 	ori_vid = VideoFileClip(input_path)
 	ori_duration = ori_vid.duration
 	w,h = ori_vid.size
@@ -50,18 +47,16 @@ def convert(args):
 
 	dst_vid = VideoClip(get_frame,duration=ori_duration)
 
-	if not args.no_audio:
+	if not args.no_audio and not output_path.endswith('gif'):
 		dst_vid.audio = ori_vid.audio
 
-	dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=multiprocessing.cpu_count())	
+	if output_path.endswith('gif'):
+		dst_vid.write_gif(output_path,fps=ori_vid.fps)
+	else:
+		dst_vid.write_videofile(output_path,fps=ori_vid.fps,threads=multiprocessing.cpu_count())	
 
 	pool.close()
 	pool.join()
 
 	ori_vid.close()
 	dst_vid.close()
-
-if __name__ == '__main__':
-
-	args = utils.get_args()
-	convert(args)

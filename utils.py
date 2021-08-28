@@ -17,9 +17,9 @@ def get_chars_size(input_size,scale,fnt):
 
 def get_args():
     parser = argparse.ArgumentParser(description="Convert image(video) to image(video)")
-    parser.add_argument('-i','--input',type=str,help='Input file')
-    parser.add_argument('-o','--output',type=str,help='Output file',default='')
-    parser.add_argument('-c','--color',dest='need_color',help='Need color or just greyscale?',action='store_true')
+    parser.add_argument('-i','--input',type=str,help='Input file path')
+    parser.add_argument('-o','--output',type=str,help='Output file path',default='')
+    parser.add_argument('-c','--color',dest='need_color',help='Need color or just the greyscale?',action='store_true')
     parser.add_argument('-s','--scale',dest='scale',help='The output scale of input size. The higher scale, the bigger output size and the better quality.',default=1.0,type=float)
     parser.add_argument('--no-audio',dest='no_audio',help='Need audio ?',action='store_false',default=False)
     return parser.parse_args()

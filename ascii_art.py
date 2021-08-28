@@ -7,7 +7,7 @@ import time
 import pathlib
 
 image_ext = { 'png','jpeg','jpg','bmp' }
-video_ext = { 'mp4','flv','mkv','avi','mov' }
+video_ext = { 'mp4','flv','mkv','avi','mov','gif'}
 txt_ext = {'txt'}
 
 def check_type(ext:str):
@@ -30,7 +30,6 @@ def convert(args):
 	input_type = check_type(input_ext[1:])
 	output_type = check_type(output_ext[1:])
 
-	print('Input and output files should be image or video file. ')
 	# if input is img , output type could be img or txt
 	if input_type == 'image' and output_type == 'txt':
 		img2txt.convert(args)	
@@ -40,7 +39,10 @@ def convert(args):
 	elif input_type == 'video' and output_type == 'video':
 		video2video.convert(args)
 	else:
-		print('Input file\'s extension is not corresponding to output\'s ' )
+		if input_type == 'unknown' or output_type == 'unknown':
+			print('Input and output files should be image or video file. ')
+		else:
+			print('Input file\'s extension is not corresponding to output\'s ' )
 		exit(0)
 	
 if __name__ == '__main__':

@@ -45,13 +45,5 @@ def convert(args):
     else:
         img = bgrimg2charimg(img, args)
 
-    if output_path == '':
-        output_path = utils.output_name_generator(input_path)
-        # img.save(output_path)
     # cv2.imwrite(output_path, np.array(img))
     img.save(output_path)
-
-
-if __name__ == '__main__':
-    args = utils.get_args()
-    convert(args)

@@ -1,6 +1,6 @@
 # Ascii Art #
-Convert an image to an ascii image or txt.  
-Convert a video to an ascii video.
+把图片对应的字符画或文本。  
+把视频转为由字符画构成的视频。
 <p align="center">
 	<img src="pic/xly.jpg" width=400 height=400>
 	<img src="pic/xly_100.jpg" width=400 height=400><br/>
@@ -9,44 +9,45 @@ Convert a video to an ascii video.
 [简体中文](./README-cn.md)  
 [English](./README.md)
 
-## Introduction ##
-Inspired by [ASCII-generator](https://github.com/uvipen/ASCII-generator). 
+## 介绍 ##
+灵感来源 [ASCII-generator](https://github.com/uvipen/ASCII-generator). 
 It is good, but has some issues when handling video such as the conversion is slow, output video has no audio.
+这个工具某些方面挺好的，但是在转换视频时有一些问题比如：速度太慢、输出没有音频。
 
-## Features ##
-* :zap: **Make Full Use Of Your CPU**. To shorten the time cost of converting the video, I use multi-processes to speed up the conversion.
-* :musical_note: **With Audio**. Output video has the same audio with the input video.
-* :warning: **Becareful To The Memory Usage**. Memory usage is large when handling the video. (500 frames * 1080p cost about 3GB)
+## 特点 ##
+* :zap: **充分利用CPU**. 为了缩短转换视频的时间，我用了python中的多进程去处理每一帧。
+* :musical_note: **有音频**. 输出的视频与输入有相同的音频。
+* :warning: **注意内存使用量！**. 处理视频时内存占用量大。(500帧 1080P的视频大概最高时占用3GB)
 
-## Requirements ##
+## 所需软件与库 ##
 `pip install opencv-python Pillow moviepy numpy`
-* **python3.8** (python >= 3.6 should work)
+* **python3.8** (python >= 3.6 应该都可以)
 * **opencv**
 * **Pillow**
 * **moviepy**
-* **numpy** (Usually included by opencv)  
+* **numpy** (一般来说安装opencv的时候会自动安装上)  
 
-## Usage ##
+## 用法 ##
 ```
 usage: ascii_art.py [-h] [-i INPUT] [-o OUTPUT] [-c] [-s SCALE] [--no-audio]
 
 Convert image(video) to image(video)
 
 optional arguments:
-  -h, --help			show this help message and exit
-  -i INPUT, --input INPUT	Input file path
-  -o OUTPUT, --output OUTPUT	Output file path
-  -c, --color 			Need color or just the greyscale?
-  -s SCALE, --scale SCALE 	The higher scale, the bigger output size and the better quality.(default is 1)
-  --no-audio			Need audio ?
+  -h, --help			展示帮助信息
+  -i INPUT, --input INPUT	输入文件路径
+  -o OUTPUT, --output OUTPUT	输出文件路径
+  -c, --color 			加上表示输出彩色，否则就是灰度图
+  -s SCALE, --scale SCALE 	输入和输出分辨率比例，越高越清晰，但输出也越大(默认是1)
+  --no-audio			不需要音频则加上这个
 ```
 
-## Example ##
-### From image to image ###
+## 例子 ##
+### 从图像到图像 ###
 ```python
-# If you want convert from image to image, or from video to video, the output file path can be omitted.
-python ascii_art.py -i pic/xly.jpg  -o xly_100.jpg -c # default value of -s option is 1.0
-python ascii_art.py -i pic/xly.jpg  # no color, the output file path is ./AsciiArt_xly.jpg
+# 如果想要从图像到图像的转换，或者从视频到视频的转换，-o选项可以不写，会自动根据输入文件名输出对应的文件。
+python ascii_art.py -i pic/xly.jpg  -o xly_100.jpg -c 
+python ascii_art.py -i pic/xly.jpg  # 没有颜色，输出文件为./AsciiArt_xly.jpg
 python ascii_art.py -i pic/xly.jpg -o xly_50.jpg -s 0.5 -c
 python ascii_art.py -i pic/xly.jpg -o xly_200.jpg -s 2 -c
 ```
@@ -57,9 +58,9 @@ python ascii_art.py -i pic/xly.jpg -o xly_200.jpg -s 2 -c
 	<img src="pic/xly_200.jpg" width=400 height=400>
 </p>
 
-### From video(or gif) to video(or git) ###
+### 从视频(或gif) 到 视频(或gif) ###
 ```python
-python ascii_art.py -i pic/xly.gif # no color, the output file path is ./AsciiArt_xly.gif
+python ascii_art.py -i pic/xly.gif # 没有颜色，输出路径为 ./AsciiArt_xly.gif
 python ascii_art.py -i pic/xly.gif -o xly_200.jpg -s 2 -c
 python ascii_art.py -i pic/xly.gif -o xly_400.jpg -s 4 -c
 ```
@@ -71,7 +72,7 @@ python ascii_art.py -i pic/xly.gif -o xly_400.jpg -s 4 -c
 	<img src="pic/xly_400.gif" width=400 height=400>
 </p>
 
-### From image to txt ###
+### 从图像到txt ###
 ```python
 python ascii_art.py -i pic/xly.jpg -o xly_txt.txt -s 0.4
 cat xly_txt.txt
@@ -112,7 +113,8 @@ cat xly_txt.txt
 {{{{{{{{{{{{{{{Z........................................f{{{
 ```
 
-## References ##
-Inspired by [ASCII-generator](https://github.com/uvipen/ASCII-generator).  
-The author of this cute duck: [刘阿圆](https://weibo.com/u/1774894770)
+## 参考 ##
+灵感来源 [ASCII-generator](https://github.com/uvipen/ASCII-generator).  
+这只小鸭子的作者: [刘阿圆](https://weibo.com/u/1774894770)
+
 

@@ -1,3 +1,6 @@
 /**/__pycache__
 /env
 /.ipynb_checkpoints
+*.jpg
+*.mp4
+!/pic/*

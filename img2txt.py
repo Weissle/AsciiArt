@@ -28,15 +28,6 @@ def convert(args):
     img = cv2.imread(input_path)
 
     chars = bgrimg2chars(img,args)
-    if output_path == '':
-        output_path = utils.output_name_generator(input_path)
-    output_path,ext = os.path.splitext(output_path)
-    output_path += '.txt'
 
     f = open(output_path,'w+')
     f.write('\n'.join(chars))
-
-if __name__ == '__main__':
-    args = utils.get_args()
-    convert(args)
-
