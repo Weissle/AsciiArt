@@ -30,7 +30,7 @@ def bgrimg2charimg_color(img, args):
     for row in range(chars_size[1]):
         for col in range(chars_size[0]):
             tmp = img[row][col]
-            # just use bgr, and remember use opencv to save image
+            # bgr color to rgb color
             color = tuple(tmp[::-1])
             d.text((col*cw, row*ch), chars[row][col], fill=color, font=fnt)
     return ret
@@ -48,7 +48,8 @@ def convert(args):
     if output_path == '':
         output_path = utils.output_name_generator(input_path)
         # img.save(output_path)
-    cv2.imwrite(output_path, np.array(img))
+    # cv2.imwrite(output_path, np.array(img))
+    img.save(output_path)
 
 
 if __name__ == '__main__':

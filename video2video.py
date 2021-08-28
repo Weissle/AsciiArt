@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import utils
-import time 
 from img2img import bgrimg2charimg,bgrimg2charimg_color
 import multiprocessing
 from moviepy.editor import VideoFileClip,VideoClip
@@ -10,7 +9,7 @@ import gc
 def multiprocess_warp(cvt_func,frame,args):
 	return cvt_func(frame,args)
 
-def video_convert(args):
+def convert(args):
 
 	input_path = args.input
 	output_path = args.output
@@ -28,10 +27,12 @@ def video_convert(args):
 
 	pool = multiprocessing.Pool(maxtasksperchild=64)
 	frames_output = []
-
+	print('Reading from input file:')
 	for frame in ori_vid.iter_frames(logger='bar'):
 		h,w,_ = frame.shape
+		#rgb 2 gbr
 		frame = frame[:,:,::-1]
+
 		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,args)))
 
 	frames_count = len(frames_output)
@@ -62,7 +63,5 @@ def video_convert(args):
 
 if __name__ == '__main__':
 
-	start_time = time.time()
 	args = utils.get_args()
-	video_convert(args)
-	print('Total time cost {0}s'.format(time.time() - start_time))
+	convert(args)
