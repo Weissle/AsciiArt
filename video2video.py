@@ -27,9 +27,6 @@ def convert(args):
 	print('Reading from input file:')
 	for frame in ori_vid.iter_frames(logger='bar'):
 		h,w,_ = frame.shape
-		#rgb 2 gbr
-		frame = frame[:,:,::-1]
-
 		frames_output.append(pool.apply_async(multiprocess_warp,args=(cvt_func,frame,args)))
 
 	frames_count = len(frames_output)
